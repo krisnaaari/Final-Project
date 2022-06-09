@@ -189,10 +189,10 @@ void randomPelanggan(){
     }
 }
 
-/*void billTiket(){
+void billTiket(int Film, int Bioskop, int Jam , int Kursi){
+    system ("cls");
     printf("Film:      %s\n", pil_F);
     printf("Bioskop:   %s\n", pil_B);
     printf("Jam:       %s\n", pil_J);
     printf("Kursi:     %s\m", pil_K);
-}*/
-//haiii 
+}
