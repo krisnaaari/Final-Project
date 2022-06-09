@@ -17,6 +17,7 @@ char jam[3][10]={"14:20", "17:00", "19:40"};
 char film[5][20]={"Avanger", "Transformer", "Doctor Strange", "Spiderman", "Susah Sinyal"};
 char bioskop[5][25]={"Beach Walk", "Galeria", "Level 21", "Park 23", "TSM"};
 
+
 // apakah suatu film ada di suatu bioskop
 bool fb[5][5]=
 {
@@ -27,7 +28,7 @@ bool fb[5][5]=
     {0,0,0,1,0}
 };
 
-
+printf("HALO SEMUANYA\n");
 void UI2();
 void screen();
 void listFilm();
