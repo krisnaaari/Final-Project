@@ -195,3 +195,4 @@ void randomPelanggan(){
     printf("Jam:       %s\n", pil_J);
     printf("Kursi:     %s\m", pil_K);
 }*/
+//haiii 
