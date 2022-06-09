@@ -191,8 +191,14 @@ void randomPelanggan(){
 
 void billTiket(int Film, int Bioskop, int Jam , int Kursi){
     system ("cls");
-    printf("Film:      %s\n", pil_F);
-    printf("Bioskop:   %s\n", pil_B);
-    printf("Jam:       %s\n", pil_J);
-    printf("Kursi:     %s\m", pil_K);
+    printf("Film:      %s\n",film[Film]);
+    printf("Bioskop:   %s\n",bioskop[Bioskop]);
+    printf("Jam:       %s\n",jam[Jam]);
+    printf("Kursi:     %s\m",Kursi + 1);
+    printf("\nTotal Pembayaran :Rp.40.000,00\n);
+           unsigned long long bayar ; unsigned long long kembalian;
+    printf("Masukan jumlah uang anda : Rp. "); scanf("%llu",&bayar);   
+    kembalian = bayar - 40000;
+    kembaliaan <= 0? printf("Terimakasihh sudah menonton ") : printf("Kembaliaan anda lagi Rp. %llu \n\n",kembalian);
+     
 }
