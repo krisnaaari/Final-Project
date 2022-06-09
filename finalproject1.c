@@ -4,7 +4,7 @@
 #include <conio.h>
 #include <time.h>
 #define maxk 40
-
+//test
 struct list{
     // 1 = kursi sudah terisi
     // 0 = kursi kosong
