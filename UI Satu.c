@@ -9,6 +9,7 @@ typedef struct tiket_t{
     char* cinema;
     char* kursi;
     char* ticketID;
+    char* jadwal;
 } tiket;
 
 tiket* ticketList[MAXTICKET];
