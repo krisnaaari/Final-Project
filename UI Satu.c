@@ -66,15 +66,11 @@ void UI1(){
 }
 
 void listBioskop(){
-    for(int i=0; i<5; i++){
-        printf("%d. %s\n", i+1, bioskop[i]);
-    }
+    for(int i=0; i<5; i++) printf("%d. %s\n", i+1, bioskop[i]);
 }
 
 void listFilm(){
-    for(int i=0; i<5; i++){
-        printf("%d. %s\n", i+1, film[i]);
-    }
+    for(int i=0; i<5; i++) printf("%d. %s\n", i+1, film[i]);
 }
 
 
@@ -146,8 +142,7 @@ void topUpSaldo(){
 }
 
 void ticketInit(){
-    for (int i = 0; i < MAXTICKET; i++)
-        ticketList[i].nama = NULL;
+    for (int i = 0; i < MAXTICKET; i++) ticketList[i].nama = NULL;
 }
 
 void myTicket(){
