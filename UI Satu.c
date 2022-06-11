@@ -6,7 +6,6 @@
 
 
 void UI1();
-void PilihBioskopFilm(); //function pilih bioskop + film
 void topUpSaldo();
 void myTicket();
 void cetakTiket(int index);
@@ -109,34 +108,6 @@ void cariBioskop(){
         }
     }
 
-}
-
-void PilihBioskopFilm(int *idfilm, int *idbioskop){ //function pilih bioskop + film
-        printf("\n===================\n");
-        listFilm();
-        printf("Masukkan pilihan : ");
-        scanf("%d", idfilm);
-        if(*idfilm == 0){
-            printf("\n");
-       
-        }
-        fflush(stdin);
-        *idfilm-=1;
-        
-        printf("\n===================\n");
-        listBioskop();
-        printf("Masukkan pilihan atau ketik 0 untuk kembali: ");
-        scanf("%d", idbioskop);
-        if(*idbioskop == 0){
-            printf("\n");  
-        }
-        fflush(stdin);
-        *idbioskop-=1;
-
-        printf("\n===================\n");
-        printf("Film dan Bioskop yang anda pilih adalah:\n");
-        printf("\nfilm %s di %s\n", film[*idfilm], bioskop[*idbioskop]);
-        system("pause");
 }
 void topUpSaldo(){
     int total;
