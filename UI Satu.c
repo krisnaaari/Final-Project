@@ -41,8 +41,6 @@ void UI1(){
                 break;
             case 5:
                 myTicket();
-                system("pause");
-                fflush(stdin);
                 break;
             case 6:
                 exit(0);
@@ -154,9 +152,11 @@ void ticketInit(){
 
 void myTicket(){
     char userInput;
-    char* id;
-    int urutan;
+    //char* id;
+    char nama[20];
+    int urutan, opsi;
     while (true){
+        system("cls");
         for (int i = 0; i < MAXTICKET; i++){
             if (strcmp(ticketList[i].nama, "") != 0){
                 //cetak tiketnya
@@ -171,26 +171,53 @@ void myTicket(){
         }
         if (strcmp(ticketList[0].nama, "") == 0){
             printf("Anda belum memiliki tiket!\n");
+            system("pause");
             return;
         }
-        fflush(stdin);
-        printf("Cetak tiket? y/n\n");
-        scanf("%c", &userInput);
-        if (userInput == 'y'){
-            while (true){
-                printf("Nomor urutan tiket yang ingin dicetak: ");
-                scanf("%d", &urutan);
-                if (urutan < 1 || urutan > 10 || ticketList[urutan-1].nama == NULL){
-                    printf("Masukkan angka yang valid!");
+        while (true){
+            fflush(stdin);
+            printf("Opsi:\n");
+            printf("1. Cetak tiket\n");
+            printf("2. Buang tiket tercetak\n");
+            printf("3. Ubah nama tiket\n");
+            printf("4. kembali\n");
+            printf("pilih: ");
+            scanf("%d", &opsi);
+            
+            if (opsi == 1 || opsi == 3){
+                while (true){
+                        printf("\nNomor urutan tiket yang ingin dicetak: ");
+                        scanf("%d", &urutan);
+                        if (urutan < 1 || urutan > 10 || strcmp(ticketList[urutan-1].nama,"") == 0)
+                            printf("\nMasukkan angka yang valid!");
+                        else break;
+                    }
+                if (opsi == 1) {
+                    cetakTiket(urutan-1);
+                    printf("\nTiket tercetak. Periksa text file!\n");
+                    break;
                 }
-                else break;
+                else if (opsi == 3){
+                    count--;
+                    printf("\nmasukkan nama: ");
+                    scanf("%s", nama);
+                    strcpy(ticketList[urutan-1].nama, nama);
+                    cetakTiket(urutan-1);
+                    printf("\nNama berhasil diubah\n");
+                    count++;
+                    break;
+                }
             }
-            cetakTiket(urutan-1);
-            printf("\nTiket tercetak. Periksa text file!\n");
+            else if(opsi == 2){
+                remove("file.txt");
+                printf("\ntiket berhasil dibuang\n");
+                break;
+            }
+            else if (opsi == 4) return;
             return;
         }
-        else if (userInput == 'n') return;
-        else printf("salah input, ulangi!");
+        system("pause");
+        fflush(stdin);
     }
 }
 
@@ -199,7 +226,7 @@ void cetakTiket(int index){
     char* tmp;
     struct tiket_t tix = ticketList[index];
     FILE *fp;
-    fp = fopen("file.txt", "r+");
+    fp = fopen("file.txt", "wb+");
     if (fp == NULL){
         printf("Cannot open file!");
         system("pause");
