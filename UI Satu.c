@@ -103,7 +103,6 @@ void PilihBioskopFilm(int *idfilm, int *idbioskop){ //function pilih bioskop + f
 }
 void topUpSaldo(){
     int total;
-    int jumlah; 
     int choice;
     printf("\n===================\n");
     do {
