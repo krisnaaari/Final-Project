@@ -5,7 +5,7 @@
 #include <time.h>
 #include <string.h>
 #define maxk 40
-#define MAXTICKET 10
+#define MAXTICKET 3
 
 struct list{
     // 1 = kursi sudah terisi
@@ -53,15 +53,19 @@ void pilihanKursi();
 void billTiket();
 void randomPelanggan();
 
-void main(){    
-    system("cls");
-    UI2();
-}
 
 void UI2(){
+    system("cls");
     int pil;
     do{
-        printf("================\n");
+        if(count>=MAXTICKET){
+            printf("=========================================================\n");
+            printf("Anda sudah mencapai batas pembelian tiket untuk hari ini!\n");
+            printf("Silahkan beli kembali besok, terima kasih.\n\n");
+            system("pause");
+            return;
+        }
+        printf("\n================\n");
         printf("1. Pilih Kursi\n");
         printf("2. Kembali\n");
         printf("Masukkan pilihan: ");
@@ -71,7 +75,8 @@ void UI2(){
                 pilihanKursi();
                 break;
             case 2:
-                exit(0);
+                return;
+                break;
             default:
                 printf("Input tidak valid!");
                 printf("Ulangi inputan!");
@@ -104,11 +109,11 @@ void listJam(){
 }
 
 void pilihanKursi(){
-    if(count>MAXTICKET){
+    if(count>=MAXTICKET){
         printf("Anda sudah mencapai batas pembelian tiket untuk hari ini!\n");
         printf("Silahkan beli kembali besok, terima kasih.\n");
         system("pause");
-        // UI1();
+        return;
     }else{
         while(1){
             printf("\n===================\n");
@@ -153,6 +158,7 @@ void pilihanKursi(){
                     pil_J -= 1;
 
                     while(1){
+                        system("cls");
                         printf("\n===================\n");
                         randomPelanggan();
                         printf("Kursi yang tersedia:\n");
@@ -189,12 +195,15 @@ void pilihanKursi(){
                             system ("pause");
                         }else{
                             if(saldo<harga){
-                                printf("saldo kurang\n");
-                                // topUpSaldo();
+                                printf("Saldo kurang!\n");
+                                printf("Silahkan top up saldo terlebih dahulu.\n");
+                                system("pause");
+                                topUpSaldo();
+                                return;
                             }else{
                                 billTiket();
                             }
-                            UI2();
+                            return;
                         }
                     }
                 }
@@ -245,6 +254,5 @@ void billTiket(){
 
         printf("Pembayaran berhasil!\n\n");
         system("pause");
-        printf("\n\n");
     }
 }
