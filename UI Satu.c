@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <stdbool.h>
 #include <string.h>
-#include "UIdua.c"
+#include "UI Dua.c"
 
 
 void UI1();
