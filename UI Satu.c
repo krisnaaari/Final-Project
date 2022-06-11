@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <stdbool.h>
 #include <string.h>
-#include "UI Dua.c"
+#include "dua.c"
 
 
 void UI1();
@@ -123,7 +123,7 @@ void myTicket(){
     int urutan;
     while (true){
         for (int i = 0; i < MAXTICKET; i++){
-            if (!strcmp(ticketList[i].nama, "")){
+            if (strcmp(ticketList[i].nama, "") != 0){
                 //cetak tiketnya
                 printf("tiket %d\n", i+1);
                 printf("bioskop: %s\n", ticketList[i].cinema);
@@ -134,7 +134,7 @@ void myTicket(){
             }
 
         }
-        if (ticketList[0].nama == NULL){
+        if (strcmp(ticketList[0].nama, "") == 0){
             printf("Anda belum memiliki tiket!\n");
             return;
         }
