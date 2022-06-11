@@ -28,7 +28,7 @@ int count = 0;
 int pil_F, pil_B, pil_J, pil_K;
 struct list jadwal[3];
 char jam[3][10]={"14:20", "17:00", "19:40"};
-char film[5][20]={"Avanger", "Transformer", "Doctor Strange", "Spiderman", "Susah Sinyal"};
+char film[5][20]={"Avenger", "Transformer", "Doctor Strange", "Spiderman", "Susah Sinyal"};
 char bioskop[5][25]={"Beach Walk", "Galeria", "Level 21", "Park 23", "TSM"};
 int saldo = 100000;
 int harga = 45000;
@@ -55,9 +55,9 @@ void randomPelanggan();
 
 
 void UI2(){
-    system("cls");
     int pil;
     do{
+        system("cls");
         if(count>=MAXTICKET){
             printf("=========================================================\n");
             printf("Anda sudah mencapai batas pembelian tiket untuk hari ini!\n");
