@@ -2,23 +2,8 @@
 #include <stdlib.h>
 #include <stdbool.h>
 #include <string.h>
-#define MAXTICKET 10
+#include "UIdua.c"
 
-typedef struct tiket_t{
-    char* nama;
-    char* film;
-    char* cinema;
-    char* kursi;
-    char* ticketID;
-    char* jadwal;
-} tiket;
-
-tiket ticketList[MAXTICKET];
-
-char bioskop[5][25]={"Beach Walk", "Galeria", "Level 21", "Park 23", "TSM"};
-char film[5][20]={"Avanger", "Transformer", "Doctor Strange", "Spiderman", "Susah Sinyal"};
-int saldo = 100000 ;
-int harga = 45000 ;
 
 void UI1();
 void PilihBioskopFilm(); //function pilih bioskop + film
@@ -27,13 +12,8 @@ void myTicket();
 void cetakTiket(int index);
 void ticketInit();
 
-int main(){  
-    UI1();
-    return 0;
-}
-
-
 void UI1(){
+    system("cls");
     int pil;
     while (true){
         system("cls");
@@ -45,7 +25,7 @@ void UI1(){
         scanf("%d", &pil);
         switch(pil){
             case 1:
-                PilihBioskopFilm();
+                UI2();
                 break;
             case 2:
                 topUpSaldo();
@@ -65,13 +45,6 @@ void UI1(){
     }
 }
 
-void listBioskop(){
-    for(int i=0; i<5; i++) printf("%d. %s\n", i+1, bioskop[i]);
-}
-
-void listFilm(){
-    for(int i=0; i<5; i++) printf("%d. %s\n", i+1, film[i]);
-}
 
 
 void PilihBioskopFilm(int *idfilm, int *idbioskop){ //function pilih bioskop + film
@@ -103,6 +76,7 @@ void PilihBioskopFilm(int *idfilm, int *idbioskop){ //function pilih bioskop + f
 }
 void topUpSaldo(){
     int total;
+    int jumlah; 
     int choice;
     printf("\n===================\n");
     do {
@@ -117,16 +91,16 @@ void topUpSaldo(){
         printf("\n");
             switch(choice){
             case 1:
-                total = saldo+100000 ;
+                saldo+=100000 ;
                 break;
             case 2:
-                total = saldo+200000 ;
+                saldo+=200000 ;
                 break;
             case 3:
-                total = saldo+500000 ;
+                saldo+=500000 ;
                 break;
             case 4:
-                total = saldo+1000000 ;
+                saldo+=1000000 ;
                 break;
             default:
                 break;
@@ -136,12 +110,12 @@ void topUpSaldo(){
     printf("======================================================\n");
     printf("                Transaction Successful!               \n");
     printf("======================================================\n");
-    printf(" Your new balance is : %d\n", total);
+    printf(" Your new balance is : %d\n", saldo);
     
 }
 
 void ticketInit(){
-    for (int i = 0; i < MAXTICKET; i++) ticketList[i].nama = NULL;
+    for (int i = 0; i < MAXTICKET; i++) ticketList[i].nama == NULL;
 }
 
 void myTicket(){
@@ -188,7 +162,7 @@ void myTicket(){
 void cetakTiket(int index){
     int i;
     char* tmp;
-    tiket tix = ticketList[index];
+    struct tiket_t tix = ticketList[index];
     FILE *fp;
     fp = fopen("file.txt", "r+");
     if (fp == NULL){
