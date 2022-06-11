@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <stdbool.h>
 #include <string.h>
-#include "dua.c"
+#include "UIdua.c"
 
 
 void UI1();
@@ -11,31 +11,41 @@ void topUpSaldo();
 void myTicket();
 void cetakTiket(int index);
 void ticketInit();
+void cariFilm();
+void cariBioskop();
 
 void UI1(){
     system("cls");
     int pil;
     while (true){
         system("cls");
-        printf("1. Pilih Bioskop dan Film\n");
-        printf("2. Top Up Saldo\n");
-        printf("3. Lihat Tiket\n");
-        printf("4. Kembali\n");
+        printf("1. Cari Film\n");
+        printf("2. Cari Bioskop\n");
+        printf("3. Pesan Tiket\n");
+        printf("4. Top Up Saldo\n");
+        printf("5. Lihat Tiket\n");
+        printf("6. Kembali\n");
         printf("Masukkan pilihan: ");
         scanf("%d", &pil);
         switch(pil){
             case 1:
-                UI2();
+                cariFilm();
                 break;
             case 2:
-                topUpSaldo();
+                cariBioskop();
                 break;
             case 3:
+                UI2();
+                break;
+            case 4:
+                topUpSaldo();
+                break;
+            case 5:
                 myTicket();
                 system("pause");
                 fflush(stdin);
                 break;
-            case 4:
+            case 6:
                 exit(0);
             default:
                 printf("Input tidak valid!");
@@ -45,7 +55,61 @@ void UI1(){
     }
 }
 
+void cariFilm(){
+    int pil1, pil2;
+    while(1){
+        printf("\n===================\n");
+        printf("List Film:\n");
+        listFilm();
+        printf("Masukkan pilihan atau ketik 0 untuk kembali: ");
+        fflush(stdin);
+        scanf("%d", &pil1);
+        if(pil1==0){
+            return;
+        }
+        pil1-=1;
+        while(1){
+            printf("\n===================\n");
+            printf("Bioskop yang menayangkan film %s:\n", film[pil1]);
+            for(int i=0; i<5; i++){
+                if(fb[pil1][i]==1){
+                    printf("%d. %s \n", i+1, bioskop[i]);
+                }
+            }
+            system("pause");
+            break;
+            
+        }
+    }
+}
 
+void cariBioskop(){
+    int pil1, pil2;
+    while(1){
+        printf("\n===================\n");
+        printf("List Bioskop: \n");
+        listBioskop();
+        printf("Masukkan pilihan atau ketik 0 untuk kembali: ");
+        fflush(stdin);
+        scanf("%d", &pil1);
+        if(pil1==0){
+            return;
+        }
+        pil1-=1;
+        while(1){
+            printf("\n===================\n");
+            printf("Film yang ditayangkan di Bioskop %s:\n", bioskop[pil1]);
+            for(int i=0; i<5; i++){
+                if(fb[i][pil1]==1){
+                    printf("%d. %s \n", i+1, film[i]);
+                }
+            }
+            system("pause");
+                break;
+        }
+    }
+
+}
 
 void PilihBioskopFilm(int *idfilm, int *idbioskop){ //function pilih bioskop + film
         printf("\n===================\n");
