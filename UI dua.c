@@ -227,9 +227,14 @@ void billTiket(){
     srand(time(0));
     int tiketId = rand();
     char tiketid[20];
+    char nama[20];
     sprintf(tiketid, "%d", tiketId);
+    printf("Masukkan nama Anda: ");
+    fflush(stdin);
+    scanf("%[^\n]", &nama);
     printf("\n==========================\n");
     printf("Rincian Pembelian Tiket : \n");
+    printf("Nama     :   %s\n", nama);
     printf("Tiket ID :   %s\n", tiketid);
 	printf("Film     :   %s\n", film[pil_F]);
     printf("Bioskop  :   %s\n", bioskop[pil_B]);
@@ -244,6 +249,7 @@ void billTiket(){
         jadwal[pil_J].kursi[pil_F][pil_B][pil_K]=1;
 
         fflush(stdin);
+        strcpy(ticketList[count].nama, nama);
         strcpy(ticketList[count].film, film[pil_F]);
         strcpy(ticketList[count].cinema, bioskop[pil_B]);
         strcpy(ticketList[count].jadwal, jam[pil_J]);
