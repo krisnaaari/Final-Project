@@ -1,4 +1,4 @@
-#include "satu.c"
+#include "UISatu.c"
 
 int main(){
     ticketInit();
