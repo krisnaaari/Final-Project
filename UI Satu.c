@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <stdbool.h>
 #include <string.h>
-#include "UIdua.c"
+#include "dua.c"
 
 
 void UI1();
@@ -115,24 +115,24 @@ void topUpSaldo(){
 }
 
 void ticketInit(){
-    for (int i = 0; i < MAXTICKET; i++) ticketList[i].nama == NULL;
-}
+    for (int i = 0; i < MAXTICKET; i++) strcpy(ticketList[i].nama, "");}
 
 void myTicket(){
     char userInput;
     char* id;
     int urutan;
-    ticketInit();
     while (true){
         for (int i = 0; i < MAXTICKET; i++){
-            if (ticketList[i].nama == NULL) continue;
-            //cetak tiketnya
-            printf("tiket %d\n", i+1);
-            printf("bioskop: %s\n", ticketList[i].cinema);
-            printf("film   : %s\n", ticketList[i].film);
-            printf("jadwal : %s\n", ticketList[i].jadwal);
-            printf("kursi  : %s\n", ticketList[i].kursi);
-            printf("ID     : %s\n\n", ticketList[i].ticketID);
+            if (!strcmp(ticketList[i].nama, "")){
+                //cetak tiketnya
+                printf("tiket %d\n", i+1);
+                printf("bioskop: %s\n", ticketList[i].cinema);
+                printf("film   : %s\n", ticketList[i].film);
+                printf("jadwal : %s\n", ticketList[i].jadwal);
+                printf("kursi  : %s\n", ticketList[i].kursi);
+                printf("ID     : %s\n\n", ticketList[i].ticketID);
+            }
+
         }
         if (ticketList[0].nama == NULL){
             printf("Anda belum memiliki tiket!\n");
