@@ -5,7 +5,7 @@
 #include <time.h>
 #include <string.h>
 #define maxk 40
-#define MAXTICKET 10
+#define MAXTICKET 3
 
 struct list{
     // 1 = kursi sudah terisi
@@ -28,7 +28,7 @@ int count = 0;
 int pil_F, pil_B, pil_J, pil_K;
 struct list jadwal[3];
 char jam[3][10]={"14:20", "17:00", "19:40"};
-char film[5][20]={"Avanger", "Transformer", "Doctor Strange", "Spiderman", "Susah Sinyal"};
+char film[5][20]={"Avenger", "Transformer", "Doctor Strange", "Spiderman", "Susah Sinyal"};
 char bioskop[5][25]={"Beach Walk", "Galeria", "Level 21", "Park 23", "TSM"};
 int saldo = 100000;
 int harga = 45000;
@@ -53,15 +53,19 @@ void pilihanKursi();
 void billTiket();
 void randomPelanggan();
 
-void main(){    
-    system("cls");
-    UI2();
-}
 
 void UI2(){
     int pil;
     do{
-        printf("================\n");
+        system("cls");
+        if(count>=MAXTICKET){
+            printf("=========================================================\n");
+            printf("Anda sudah mencapai batas pembelian tiket untuk hari ini!\n");
+            printf("Silahkan beli kembali besok, terima kasih.\n\n");
+            system("pause");
+            return;
+        }
+        printf("\n================\n");
         printf("1. Pilih Kursi\n");
         printf("2. Kembali\n");
         printf("Masukkan pilihan: ");
@@ -71,7 +75,8 @@ void UI2(){
                 pilihanKursi();
                 break;
             case 2:
-                exit(0);
+                return;
+                break;
             default:
                 printf("Input tidak valid!");
                 printf("Ulangi inputan!");
@@ -104,11 +109,11 @@ void listJam(){
 }
 
 void pilihanKursi(){
-    if(count>MAXTICKET){
+    if(count>=MAXTICKET){
         printf("Anda sudah mencapai batas pembelian tiket untuk hari ini!\n");
         printf("Silahkan beli kembali besok, terima kasih.\n");
         system("pause");
-        // UI1();
+        return;
     }else{
         while(1){
             printf("\n===================\n");
@@ -153,6 +158,7 @@ void pilihanKursi(){
                     pil_J -= 1;
 
                     while(1){
+                        system("cls");
                         printf("\n===================\n");
                         randomPelanggan();
                         printf("Kursi yang tersedia:\n");
@@ -189,12 +195,15 @@ void pilihanKursi(){
                             system ("pause");
                         }else{
                             if(saldo<harga){
-                                printf("saldo kurang\n");
-                                // topUpSaldo();
+                                printf("Saldo kurang!\n");
+                                printf("Silahkan top up saldo terlebih dahulu.\n");
+                                system("pause");
+                                topUpSaldo();
+                                return;
                             }else{
                                 billTiket();
                             }
-                            UI2();
+                            return;
                         }
                     }
                 }
@@ -218,9 +227,14 @@ void billTiket(){
     srand(time(0));
     int tiketId = rand();
     char tiketid[20];
+    char nama[20];
     sprintf(tiketid, "%d", tiketId);
+    printf("Masukkan nama Anda: ");
+    fflush(stdin);
+    scanf("%[^\n]", &nama);
     printf("\n==========================\n");
     printf("Rincian Pembelian Tiket : \n");
+    printf("Nama     :   %s\n", nama);
     printf("Tiket ID :   %s\n", tiketid);
 	printf("Film     :   %s\n", film[pil_F]);
     printf("Bioskop  :   %s\n", bioskop[pil_B]);
@@ -235,6 +249,7 @@ void billTiket(){
         jadwal[pil_J].kursi[pil_F][pil_B][pil_K]=1;
 
         fflush(stdin);
+        strcpy(ticketList[count].nama, nama);
         strcpy(ticketList[count].film, film[pil_F]);
         strcpy(ticketList[count].cinema, bioskop[pil_B]);
         strcpy(ticketList[count].jadwal, jam[pil_J]);
@@ -245,6 +260,5 @@ void billTiket(){
 
         printf("Pembayaran berhasil!\n\n");
         system("pause");
-        printf("\n\n");
     }
 }
