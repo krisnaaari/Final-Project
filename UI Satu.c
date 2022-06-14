@@ -2,60 +2,48 @@
 #include <stdlib.h>
 #include <stdbool.h>
 #include <string.h>
-#define MAXTICKET 10
+#include "UIDua.c"
 
-typedef struct tiket_t{
-    char* nama;
-    char* film;
-    char* cinema;
-    char* kursi;
-    char* ticketID;
-    char* jadwal;
-} tiket;
-
-tiket ticketList[MAXTICKET];
-
-char bioskop[5][25]={"Beach Walk", "Galeria", "Level 21", "Park 23", "TSM"};
-char film[5][20]={"Avanger", "Transformer", "Doctor Strange", "Spiderman", "Susah Sinyal"};
-int saldo = 100000 ;
-int harga = 45000 ;
 
 void UI1();
-void PilihBioskopFilm(); //function pilih bioskop + film
 void topUpSaldo();
 void myTicket();
 void cetakTiket(int index);
 void ticketInit();
-
-int main(){  
-    UI1();
-    return 0;
-}
-
+void cariFilm();
+void cariBioskop();
 
 void UI1(){
+    system("cls");
     int pil;
     while (true){
         system("cls");
-        printf("1. Pilih Bioskop dan Film\n");
-        printf("2. Top Up Saldo\n");
-        printf("3. Lihat Tiket\n");
-        printf("4. Kembali\n");
+        printf("saldo anda: %d\n", saldo);
+        printf("1. Cari Film\n");
+        printf("2. Cari Bioskop\n");
+        printf("3. Pesan Tiket\n");
+        printf("4. Top Up Saldo\n");
+        printf("5. Lihat Tiket\n");
+        printf("6. Kembali\n");
         printf("Masukkan pilihan: ");
         scanf("%d", &pil);
         switch(pil){
             case 1:
-                PilihBioskopFilm();
+                cariFilm(); 
                 break;
             case 2:
-                topUpSaldo();
+                cariBioskop();
                 break;
             case 3:
-                myTicket();
-                system("pause");
-                fflush(stdin);
+                UI2();
                 break;
             case 4:
+                topUpSaldo();
+                break;
+            case 5:
+                myTicket();
+                break;
+            case 6:
                 exit(0);
             default:
                 printf("Input tidak valid!");
@@ -65,44 +53,64 @@ void UI1(){
     }
 }
 
-void listBioskop(){
-    for(int i=0; i<5; i++) printf("%d. %s\n", i+1, bioskop[i]);
-}
-
-void listFilm(){
-    for(int i=0; i<5; i++) printf("%d. %s\n", i+1, film[i]);
-}
-
-
-void PilihBioskopFilm(int *idfilm, int *idbioskop){ //function pilih bioskop + film
+void cariFilm(){
+    int pil1, pil2;
+    while(1){
         printf("\n===================\n");
+        printf("List Film:\n");
         listFilm();
-        printf("Masukkan pilihan : ");
-        scanf("%d", idfilm);
-        if(*idfilm == 0){
-            printf("\n");
-       
-        }
+        printf("Masukkan pilihan atau ketik 0 untuk kembali: ");
         fflush(stdin);
-        *idfilm-=1;
-        
+        scanf("%d", &pil1);
+        if(pil1==0){
+            return;
+        }
+        pil1-=1;
+        while(1){
+            printf("\n===================\n");
+            printf("Bioskop yang menayangkan film %s:\n", film[pil1]);
+            for(int i=0; i<5; i++){
+                if(fb[pil1][i]==1){
+                    printf("%d. %s \n", i+1, bioskop[i]);
+                }
+            }
+            system("pause");
+            break;
+            
+        }
+    }
+}
+
+void cariBioskop(){
+    int pil1, pil2;
+    while(1){
         printf("\n===================\n");
+        printf("List Bioskop: \n");
         listBioskop();
         printf("Masukkan pilihan atau ketik 0 untuk kembali: ");
-        scanf("%d", idbioskop);
-        if(*idbioskop == 0){
-            printf("\n");  
-        }
         fflush(stdin);
-        *idbioskop-=1;
+        scanf("%d", &pil1);
+        if(pil1==0){
+            return;
+        }
+        pil1-=1;
+        while(1){
+            printf("\n===================\n");
+            printf("Film yang ditayangkan di Bioskop %s:\n", bioskop[pil1]);
+            for(int i=0; i<5; i++){
+                if(fb[i][pil1]==1){
+                    printf("%d. %s \n", i+1, film[i]);
+                }
+            }
+            system("pause");
+                break;
+        }
+    }
 
-        printf("\n===================\n");
-        printf("Film dan Bioskop yang anda pilih adalah:\n");
-        printf("\nfilm %s di %s\n", film[*idfilm], bioskop[*idbioskop]);
-        system("pause");
 }
 void topUpSaldo(){
     int total;
+    int jumlah; 
     int choice;
     printf("\n===================\n");
     do {
@@ -117,16 +125,16 @@ void topUpSaldo(){
         printf("\n");
             switch(choice){
             case 1:
-                total = saldo+100000 ;
+                saldo+=100000 ;
                 break;
             case 2:
-                total = saldo+200000 ;
+                saldo+=200000 ;
                 break;
             case 3:
-                total = saldo+500000 ;
+                saldo+=500000 ;
                 break;
             case 4:
-                total = saldo+1000000 ;
+                saldo+=1000000 ;
                 break;
             default:
                 break;
@@ -136,61 +144,90 @@ void topUpSaldo(){
     printf("======================================================\n");
     printf("                Transaction Successful!               \n");
     printf("======================================================\n");
-    printf(" Your new balance is : %d\n", total);
+    printf(" Your new balance is : %d\n", saldo);
     
 }
 
 void ticketInit(){
-    for (int i = 0; i < MAXTICKET; i++) ticketList[i].nama = NULL;
-}
+    for (int i = 0; i < MAXTICKET; i++) strcpy(ticketList[i].nama, "");}
 
 void myTicket(){
     char userInput;
-    char* id;
-    int urutan;
-    ticketInit();
+    //char* id;
+    char nama[20];
+    int urutan, opsi;
     while (true){
+        system("cls");
         for (int i = 0; i < MAXTICKET; i++){
-            if (ticketList[i].nama == NULL) continue;
-            //cetak tiketnya
-            printf("tiket %d\n", i+1);
-            printf("bioskop: %s\n", ticketList[i].cinema);
-            printf("film   : %s\n", ticketList[i].film);
-            printf("jadwal : %s\n", ticketList[i].jadwal);
-            printf("kursi  : %s\n", ticketList[i].kursi);
-            printf("ID     : %s\n\n", ticketList[i].ticketID);
-        }
-        if (ticketList[0].nama == NULL){
-            printf("Anda belum memiliki tiket!\n");
-            return;
-        }
-        fflush(stdin);
-        printf("Cetak tiket? y/n\n");
-        scanf("%c", &userInput);
-        if (userInput == 'y'){
-            while (true){
-                printf("Nomor urutan tiket yang ingin dicetak: ");
-                scanf("%d", &urutan);
-                if (urutan < 1 || urutan > 10 || ticketList[urutan-1].nama == NULL){
-                    printf("Masukkan angka yang valid!");
-                }
-                else break;
+            if (strcmp(ticketList[i].nama, "") != 0){
+                //cetak tiketnya
+                printf("tiket %d\n", i+1);
+                printf("bioskop: %s\n", ticketList[i].cinema);
+                printf("film   : %s\n", ticketList[i].film);
+                printf("jadwal : %s\n", ticketList[i].jadwal);
+                printf("kursi  : %s\n", ticketList[i].kursi);
+                printf("ID     : %s\n\n", ticketList[i].ticketID);
             }
-            cetakTiket(urutan-1);
-            printf("\nTiket tercetak. Periksa text file!\n");
+
+        }
+        if (strcmp(ticketList[0].nama, "") == 0){
+            printf("Anda belum memiliki tiket!\n");
+            system("pause");
             return;
         }
-        else if (userInput == 'n') return;
-        else printf("salah input, ulangi!");
+        while (true){
+            fflush(stdin);
+            printf("Opsi:\n");
+            printf("1. Cetak tiket\n");
+            printf("2. Buang tiket tercetak\n");
+            printf("3. Ubah nama tiket\n");
+            printf("4. kembali\n");
+            printf("pilih: ");
+            scanf("%d", &opsi);
+            
+            if (opsi == 1 || opsi == 3){
+                while (true){
+                        printf("\nNomor urutan tiket yang ingin dicetak: ");
+                        scanf("%d", &urutan);
+                        if (urutan < 1 || urutan > 10 || strcmp(ticketList[urutan-1].nama,"") == 0)
+                            printf("\nMasukkan angka yang valid!");
+                        else break;
+                    }
+                if (opsi == 1) {
+                    cetakTiket(urutan-1);
+                    printf("\nTiket tercetak. Periksa text file!\n");
+                    break;
+                }
+                else if (opsi == 3){
+                    count--;
+                    printf("\nmasukkan nama: ");
+                    scanf("%s", nama);
+                    strcpy(ticketList[urutan-1].nama, nama);
+                    cetakTiket(urutan-1);
+                    printf("\nNama berhasil diubah\n");
+                    count++;
+                    break;
+                }
+            }
+            else if(opsi == 2){
+                remove("file.txt");
+                printf("\ntiket berhasil dibuang\n");
+                break;
+            }
+            else if (opsi == 4) return;
+            return;
+        }
+        system("pause");
+        fflush(stdin);
     }
 }
 
 void cetakTiket(int index){
     int i;
     char* tmp;
-    tiket tix = ticketList[index];
+    struct tiket_t tix = ticketList[index];
     FILE *fp;
-    fp = fopen("file.txt", "r+");
+    fp = fopen("file.txt", "wb+");
     if (fp == NULL){
         printf("Cannot open file!");
         system("pause");
